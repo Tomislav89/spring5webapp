@@ -4,9 +4,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
+@Entity //anotacija koja kreira JPA entitet od POJO klase
 public class Author {
 
+    // Generiran Id i primary key
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
