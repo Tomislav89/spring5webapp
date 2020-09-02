@@ -12,7 +12,8 @@ public class Publisher {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
-    private String address;
+    private String name;
+    private String addressLine1;
     private String city;
     private String state;
     private String zip;
@@ -20,18 +21,53 @@ public class Publisher {
     // jedan publisher ima više knjiga
     @OneToMany
     //daje hiberanteu hint da doda publisher_id u zapis knjiga te tako kreira strani ključ
-    @JoinColumn (name = "publisher_id")
+    @JoinColumn(name = "publisher_id")
     private Set<Book> books = new HashSet<>();
 
-    public Publisher(String address, String city, String state, String zip) {
-        this.address = address;
+    public Publisher(String name, String addressLine1, String city, String state, String zip) {
+        this.name = name;
+        this.addressLine1 = addressLine1;
         this.city = city;
         this.state = state;
         this.zip = zip;
     }
 
-
     public Publisher() {
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "Publisher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", addressLine1='" + addressLine1 + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Publisher publisher = (Publisher) o;
+
+        return id != null ? id.equals(publisher.id) : publisher.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
     public Long getId() {
@@ -42,12 +78,20 @@ public class Publisher {
         this.id = id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getName() {
+        return name;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddressLine1() {
+        return addressLine1;
+    }
+
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
     }
 
     public String getCity() {
@@ -72,37 +116,5 @@ public class Publisher {
 
     public void setZip(String zip) {
         this.zip = zip;
-    }
-
-    public Set<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(Set<Book> books) {
-        this.books = books;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Publisher publisher = (Publisher) o;
-        return Objects.equals(id, publisher.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, address, city, state, zip);
-    }
-
-    @Override
-    public String toString() {
-        return "Publisher{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zip='" + zip + '\'' +
-                '}';
     }
 }
