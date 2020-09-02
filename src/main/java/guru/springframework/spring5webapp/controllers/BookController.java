@@ -14,8 +14,9 @@ public class BookController {
         this.bookRepository = bookRepository;
     }
 
-    @RequestMapping("/books")
+    @RequestMapping("/books") // localhost:8090/boooks
     public String getBooks(Model model){
+        // <tr th:each="book : ${books}"> books je parametar koji se prosljedi u html te vrši for each iteraciju po listi knjiga
         model.addAttribute("books", bookRepository.findAll());
         return "books/list";
     }
